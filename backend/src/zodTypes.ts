@@ -27,3 +27,11 @@ export const postBody = z.object({
   content: z.string(),
   published: z.boolean(),
 });
+
+export const updateBody = z.object({
+  id: z.string().optional(),
+  title: z.string().optional(),
+  slug: z.string().optional(),
+  content: z.string().optional(),
+  published: z.boolean().optional(),
+});

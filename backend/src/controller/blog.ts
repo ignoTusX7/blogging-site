@@ -1,7 +1,7 @@
 import { Context } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { postBody } from "../zodTypes";
+import { postBody, updateBody } from "../zodTypes";
 import { createSlug } from "../../helper";
 
 export const postBlogController = async (c: Context) => {
@@ -106,5 +106,39 @@ export const getBlogsController = async (c: Context) => {
 };
 
 export const updateBlogsController = async (c: Context) => {
-  return c.text("update blogs controller");
+  const body = updateBody.safeParse(await c.req.json());
+  const userId: string = c.get("userId");
+
+  if (!body.success) {
+    c.status(411);
+    return c.json({ message: "Invalid Inputs" });
+  }
+
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const blog = await prisma.post.update({
+      where: {
+        id: body.data.id,
+        authorId: userId,
+      },
+      data: {
+        title: body.data.title,
+        slug: body.data.slug,
+        content: body.data.content,
+        published: body.data.published,
+      },
+    });
+
+    c.status(200);
+    return c.json({ message: "Blog Updated", blog });
+  } catch (error) {
+    console.error("Error updating blog:", error);
+    c.status(500);
+    return c.json({ message: "Internal Server Error" });
+  } finally {
+    await prisma.$disconnect();
+  }
 };
