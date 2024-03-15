@@ -1,14 +1,7 @@
 import { Context } from "hono";
-import { z } from "@hono/zod-openapi";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-
-const postBody = z.object({
-  title: z.string(),
-  slug: z.string(),
-  content: z.string(),
-  published: z.boolean(),
-});
+import { postBody } from "../zodTypes";
 
 export const postBlogController = async (c: Context) => {
   const userId = c.get("userId");
@@ -25,9 +18,13 @@ export const postBlogController = async (c: Context) => {
           slug: body.data.slug.toLowerCase(),
         },
       });
+      
       if (exist) {
         c.status(401);
-        return c.json({ status: false, message: "Post with same slug already exist" });
+        return c.json({
+          status: false,
+          message: "Post with same slug already exist",
+        });
       }
       const newPost = await prisma.post.create({
         data: {

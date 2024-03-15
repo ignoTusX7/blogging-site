@@ -1,34 +1,11 @@
 import { Context } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { z } from "@hono/zod-openapi";
 import { encryptor } from "../../helper";
 import { sign } from "hono/jwt";
+import { signInBody, signUpBody } from "../zodTypes";
 
-const signUpBody = z
-  .object({
-    name: z.string().openapi({
-      example: "John Doe",
-    }),
-    email: z.string().openapi({
-      example: "johndoe@example.com",
-    }),
-    password: z.string().openapi({
-      example: "mysecretpass@123",
-    }),
-  })
-  .openapi("SignUp");
 
-const signInBody = z
-  .object({
-    email: z.string().openapi({
-      example: "johndoe@example.com",
-    }),
-    password: z.string().openapi({
-      example: "mysecretpass@123",
-    }),
-  })
-  .openapi("SignIn");
 
 export const signupController = async (c: Context) => {
   const body = signUpBody.safeParse(await c.req.json());
@@ -122,6 +99,7 @@ export const signinController = async (c: Context) => {
   });
 };
 
+//Get a Blog of a user
 export const getBlog = async (c: Context) => {
   const slug: string = c.req.param("slug");
   const userId = c.get("userId");
@@ -133,7 +111,7 @@ export const getBlog = async (c: Context) => {
     const blog = await prisma.post.findFirst({
       where: {
         slug: slug,
-        authorId: userId
+        authorId: userId,
       },
     });
 
@@ -152,6 +130,8 @@ export const getBlog = async (c: Context) => {
     await prisma.$disconnect();
   }
 };
+
+//Get All Blogs of a user
 export const getBlogs = async (c: Context) => {
   const userId = c.get("userId");
   const prisma = new PrismaClient({
