@@ -5,11 +5,14 @@ import {
   postBlogController,
   updateBlogsController,
 } from "../controller/blog";
+import { auth } from "../middlewares/auth";
 
 const blog = new Hono();
 
-blog.post("/blog", postBlogController);
-blog.put("/blog", updateBlogsController);
+
+
+blog.post("/", auth,postBlogController);
+blog.put("/", updateBlogsController);
 blog.get("/blogs", getBlogsController);
 blog.get("/blog/:id", getBlogController);
 

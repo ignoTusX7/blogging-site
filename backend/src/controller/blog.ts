@@ -1,6 +1,7 @@
 import { Context } from "hono";
 
 export const postBlogController = async (c: Context) => {
+  // console.log(c.get('userId'))
   return c.text("Post blog controller");
 };
 

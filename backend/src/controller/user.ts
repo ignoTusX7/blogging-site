@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { z } from "@hono/zod-openapi";
 import { encryptor } from "../../helper";
-import { decode, sign, verify } from "hono/jwt";
+import { sign } from "hono/jwt";
 
 const signUpBody = z
   .object({
@@ -91,13 +91,15 @@ export const signinController = async (c: Context) => {
         body.data.password,
         user.password
       );
-      console.log(decPass);
 
       if (decPass) {
         c.status(201);
         //@ts-ignore
         delete user.password;
-        const token = await sign({ id: user.id, email: user.email }, c.env.JWT_SECRET);
+        const token = await sign(
+          { id: user.id, email: user.email },
+          c.env.JWT_SECRET
+        );
         return c.json({ success: true, token });
       }
 
