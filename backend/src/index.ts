@@ -3,9 +3,10 @@ import mainRouter from "./routes";
 
 
 const app = new Hono<{
-  Bindings: {
-    DATABASE_URL: string
-  }
+	Bindings: {
+		DATABASE_URL: string,
+		JWT_SECRET: string,
+	}
 }>();
 
 
