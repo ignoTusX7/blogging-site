@@ -2,6 +2,7 @@ import { Context } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { postBody } from "../zodTypes";
+import { createSlug } from "../../helper";
 
 export const postBlogController = async (c: Context) => {
   const userId = c.get("userId");
@@ -18,7 +19,7 @@ export const postBlogController = async (c: Context) => {
           slug: body.data.slug.toLowerCase(),
         },
       });
-      
+
       if (exist) {
         c.status(401);
         return c.json({
@@ -29,7 +30,7 @@ export const postBlogController = async (c: Context) => {
       const newPost = await prisma.post.create({
         data: {
           title: body.data.title,
-          slug: body.data.slug.toLowerCase(),
+          slug: createSlug(body.data.slug),
           content: body.data.content,
           published: body.data.published,
           authorId: userId,
