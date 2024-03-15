@@ -7,13 +7,12 @@
     "@hono/zod-openapi": "^0.9.8",
     "@prisma/client": "^5.11.0",
     "@prisma/extension-accelerate": "^1.0.0",
-    "crypto-js": "^4.2.0",
+    "bcrypt-ts": "^5.0.2",
     "hono": "^4.1.0",
     "prisma": "^5.11.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240208.0",
-    "@types/crypto-js": "^4.2.2",
     "wrangler": "^3.32.0"
   }
 }

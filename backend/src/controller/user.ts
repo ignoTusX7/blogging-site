@@ -43,7 +43,8 @@ export const signupController = async (c: Context) => {
       },
     });
     if (!user) {
-      const encryptedPass = encryptor.encryptPassword(body.data.password);
+      const encryptedPass = await encryptor.encryptPassword(body.data.password);
+
       const newUser = await prisma.user.create({
         data: {
           email: body.data.email,
@@ -74,30 +75,40 @@ export const signinController = async (c: Context) => {
   const body = signInBody.safeParse(await c.req.json());
 
   if (body.success) {
-
-    console.log(encryptor.decryptPassword("1234"));
-
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
 
-    const decryptedPassword =  encryptor.decryptPassword(body.data.password);
-    
     const user = await prisma.user.findUnique({
       where: {
         email: body.data.email,
       },
     });
-    // console.log(user);
-    if (user && user.password === decryptedPassword) {
-      c.status(201);
-      return c.json({ success: true, user });
-    }
 
+    if (user) {
+      const decPass = await encryptor.decryptPassword(
+        body.data.password,
+        user.password
+      );
+      console.log(decPass);
+
+      if (decPass) {
+        c.status(201);
+        //@ts-ignore
+        delete user.password;
+        return c.json({ success: true, user });
+      }
+
+      c.status(401);
+      return c.json({
+        status: false,
+        message: "Invalid Credentials",
+      });
+    }
     c.status(401);
     return c.json({
       status: false,
-      message: "User not exist",
+      message: "Invalid Credentials",
     });
   }
   c.status(401);
