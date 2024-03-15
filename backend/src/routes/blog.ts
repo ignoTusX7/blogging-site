@@ -13,7 +13,7 @@ const blog = new Hono();
 
 blog.post("/", auth,postBlogController);
 blog.put("/", updateBlogsController);
-blog.get("/blogs", getBlogsController);
-blog.get("/blog/:id", getBlogController);
+blog.get("/", getBlogsController);
+blog.get("/:slug", getBlogController);
 
 export default blog;
