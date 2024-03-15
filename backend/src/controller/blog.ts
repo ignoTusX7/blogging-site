@@ -16,7 +16,7 @@ export const postBlogController = async (c: Context) => {
     try {
       const exist = await prisma.post.findFirst({
         where: {
-          slug: body.data.slug.toLowerCase(),
+          slug: createSlug(body.data.slug),
         },
       });
 
@@ -163,7 +163,7 @@ export const deleteBlogController = async (c: Context) => {
     return c.json({ message: "Post Deleted" });
   } catch (error) {
     c.status(400);
-    console.error("Error : ", error)
+    console.error("Error : ", error);
     return c.json({ message: "Failed to delete Post" });
   } finally {
     prisma.$disconnect();
