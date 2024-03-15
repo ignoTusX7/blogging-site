@@ -142,3 +142,29 @@ export const updateBlogsController = async (c: Context) => {
     await prisma.$disconnect();
   }
 };
+
+export const deleteBlogController = async (c: Context) => {
+  const postId: string = c.req.param("id");
+  const authorId = c.get("userId");
+
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    await prisma.post.delete({
+      where: {
+        id: postId,
+        authorId: authorId,
+      },
+    });
+
+    c.status(200);
+    return c.json({ message: "Post Deleted" });
+  } catch (error) {
+    c.status(401);
+    return c.json({ message: "Failed to delete Post" });
+  } finally {
+    prisma.$disconnect();
+  }
+};

@@ -35,3 +35,4 @@ export const updateBody = z.object({
   content: z.string().optional(),
   published: z.boolean().optional(),
 });
+

@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import {
+  deleteBlogController,
   getBlogController,
   getBlogsController,
   postBlogController,
@@ -13,5 +14,6 @@ blog.post("/", auth, postBlogController);
 blog.put("/", auth, updateBlogsController);
 blog.get("/", getBlogsController);
 blog.get("/:slug", getBlogController);
+blog.delete("/:id", auth, deleteBlogController);
 
 export default blog;
