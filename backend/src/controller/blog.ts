@@ -162,7 +162,8 @@ export const deleteBlogController = async (c: Context) => {
     c.status(200);
     return c.json({ message: "Post Deleted" });
   } catch (error) {
-    c.status(401);
+    c.status(400);
+    console.error("Error : ", error)
     return c.json({ message: "Failed to delete Post" });
   } finally {
     prisma.$disconnect();
