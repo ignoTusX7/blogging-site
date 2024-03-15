@@ -1,0 +1,15 @@
+node_modules
+dist
+.wrangler
+wrangler.toml
+.dev.vars
+.env
+.env/
+
+
+# Change them to your taste:
+package-lock.json
+.env
+n
+pm-lock.yaml
+bun.lockb
