@@ -5,8 +5,6 @@ import { encryptor } from "../../helper";
 import { sign } from "hono/jwt";
 import { signInBody, signUpBody } from "../zodTypes";
 
-
-
 export const signupController = async (c: Context) => {
   const body = signUpBody.safeParse(await c.req.json());
 
@@ -113,6 +111,22 @@ export const getBlog = async (c: Context) => {
         slug: slug,
         authorId: userId,
       },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            createdAt: true,
+          },
+        },
+      },
     });
 
     if (!blog) {
@@ -142,6 +156,22 @@ export const getBlogs = async (c: Context) => {
     const allBlogs = await prisma.post.findMany({
       where: {
         authorId: userId,
+      },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            createdAt: true,
+          },
+        },
       },
     });
 
