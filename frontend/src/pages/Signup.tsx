@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { BiHide, BiShow } from "react-icons/bi";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 interface IFormInput {
   name: string;
   email: string;
@@ -22,30 +24,33 @@ export const Signup = () => {
 
   const [showPass, setShowPass] = useState(false);
   const [showCPass, setShowCPass] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const password = useRef({});
   password.current = watch("password", "");
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-
+    setLoading(true);
     try {
       const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, {
         name: data.name,
         email: data.email,
         password: data.password,
       });
+      setLoading(false);
       if (res.status == 200) {
         return navigate("/signin");
       }
     } catch (error) {
+      setLoading(false);
       //@ts-expect-error not_know_type
       if (error.response.data.status === false) {
         //@ts-expect-error not_know_type
-        return alert(error.response.data.message);
+        return toast.error(error.response.data.message);
       }
-      alert("Failed to create an account");
-      console.log(error);
+      toast.error("Failed to create an account");
+      console.error("Error: ", error);
     }
   };
 
@@ -53,6 +58,7 @@ export const Signup = () => {
     <div className="grid grid-cols-2">
       <div>
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-10 lg:px-8">
+          <ToastContainer />
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
               Create an Account
@@ -187,7 +193,7 @@ export const Signup = () => {
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign in
+                  {loading ? "Loading..." : "Signup"}
                 </button>
               </div>
             </form>
