@@ -61,6 +61,20 @@ export const getBlogController = async (c: Context) => {
         slug: slug,
         published: true,
       },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
     });
 
     if (!blog) {
@@ -87,6 +101,20 @@ export const getBlogsController = async (c: Context) => {
     const allBlogs = await prisma.post.findMany({
       where: {
         published: true,
+      },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
     if (!allBlogs) {
