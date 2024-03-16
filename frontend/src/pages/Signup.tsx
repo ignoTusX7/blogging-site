@@ -7,6 +7,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button } from "../components/ui/Button";
 interface IFormInput {
   name: string;
   email: string;
@@ -134,6 +135,10 @@ export const Signup = () => {
                       type={showPass ? "text" : "password"}
                       {...register("password", {
                         required: "Password is required",
+                        minLength: {
+                          value: 6,
+                          message: "Password must greater than 6 characters",
+                        },
                       })}
                       aria-invalid={errors.password ? "true" : "false"}
                       className={`border-none outline-none w-[93%]`}
@@ -166,6 +171,10 @@ export const Signup = () => {
                       type={showCPass ? "text" : "password"}
                       {...register("cpassword", {
                         required: "Confirm Password is required",
+                        minLength: {
+                          value: 6,
+                          message: "Password must greater than 6 characters",
+                        },
                         validate: (value) =>
                           value === password.current ||
                           "Password and Confirm Password do not match",
@@ -189,12 +198,10 @@ export const Signup = () => {
               </div>
 
               <div>
-                <button
+                <Button
+                  label={loading ? "Loading..." : "Sign Up"}
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  {loading ? "Loading..." : "Signup"}
-                </button>
+                />
               </div>
             </form>
 
@@ -202,7 +209,7 @@ export const Signup = () => {
               Already have an account?{" "}
               <Link
                 to="/signin"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                className="font-semibold leading-6 text-gray-900 hover:text-gray-800"
               >
                 signin
               </Link>

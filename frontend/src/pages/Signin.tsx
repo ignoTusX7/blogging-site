@@ -7,6 +7,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button } from "../components/ui/Button";
 interface IFormInput {
   email: string;
   password: string;
@@ -127,22 +128,17 @@ export const Signin = () => {
                 </div>
               </div>
               <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  {loading ? "Loading..." : "Signin"}
-                </button>
+                <Button label={loading? "Loading..." : "Signup"} type="submit"/>
               </div>
             </form>
 
             <p className="mt-10 text-center text-sm text-gray-500">
-              Already have an account?{" "}
+              Doesn't have an account?{" "}
               <Link
-                to="/signin"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+                to="/signup"
+                className="font-semibold leading-6 text-gray-900 hover:text-gray-800"
               >
-                signin
+                Sign up
               </Link>
             </p>
           </div>
