@@ -39,7 +39,7 @@ export const Signin = () => {
       if (res.data.success === true) {
         const jwt = res.data.token;
         localStorage.setItem("token", jwt);
-        return navigate("/");
+        return (window.location.href = "/");
       }
     } catch (error) {
       setLoading(false);
@@ -128,7 +128,10 @@ export const Signin = () => {
                 </div>
               </div>
               <div>
-                <Button label={loading? "Loading..." : "Signup"} type="submit"/>
+                <Button
+                  label={loading ? "Loading..." : "Signup"}
+                  type="submit"
+                />
               </div>
             </form>
 
