@@ -28,7 +28,6 @@ export const Signup = () => {
   password.current = watch("password", "");
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    console.log(data);
 
     try {
       const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, {
@@ -40,9 +39,9 @@ export const Signup = () => {
         return navigate("/signin");
       }
     } catch (error) {
-      //@ts-expect-error not know type
+      //@ts-expect-error not_know_type
       if (error.response.data.status === false) {
-        //@ts-expect-error not know type
+        //@ts-expect-error not_know_type
         return alert(error.response.data.message);
       }
       alert("Failed to create an account");
