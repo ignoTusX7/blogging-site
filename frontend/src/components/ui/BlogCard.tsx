@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
+import { readingTime } from "../../helper";
 
 interface IBlogCardProps {
   title: string;
   slug: string;
   content: string;
   publishedAt: string;
+  updatedAt?: string;
   authorName: string;
 }
+
+
 
 export const BlogCard = ({
   title,
@@ -15,12 +19,7 @@ export const BlogCard = ({
   publishedAt,
   authorName,
 }: IBlogCardProps) => {
-  const readingTime = (text: string) => {
-    const wpm = 225;
-    const words = text.trim().split(/\s+/).length;
-    const time = Math.ceil(words / wpm);
-    return time;
-  };
+
 
   return (
     <div className="flex flex-col p-2">

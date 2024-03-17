@@ -2,18 +2,8 @@ import { useEffect, useState } from "react";
 import { BlogCard } from "../components/ui/BlogCard";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-
-interface IAuthor {
-  name: string;
-}
-interface IBlog {
-  id: string;
-  title: string;
-  slug: string;
-  content: string;
-  createdAt: string;
-  author: IAuthor;
-}
+import { IBlog } from "../types";
+import { createDate } from "../helper";
 
 export const Home = () => {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
@@ -24,29 +14,6 @@ export const Home = () => {
       .then((data) => setBlogs(data.data))
       .catch((e) => console.log(e));
   }, []);
-
-  const createDate = (date: string) => {
-    const d = new Date(date);
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    // Format date
-    const formattedDate = `${
-      months[d.getMonth()]
-    } ${d.getDate()}, ${d.getFullYear()}`;
-    return formattedDate;
-  };
 
  
   return (
