@@ -35,13 +35,13 @@ export const Blog = () => {
   return (
     <div className="mt-10 md:mt-20 mx-auto px-4 sm:px-6 lg:px-16">
       <div className="md:w-3/4 mx-auto">
-        <div className="flex flex-col md:flex-row items-start">
+        <div className="flex items-start ">
           <div className="flex-shrink-0 relative inline-flex items-center justify-center w-16 h-16 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mb-4 md:mb-0">
             <span className="font-medium text-3xl text-gray-600 dark:text-gray-300">
               {blog && blog.author.name[0]}
             </span>
           </div>
-          <div className="flex flex-col md:ml-4 text-left">
+          <div className="flex flex-col ml-4 text-left">
             <p className="text-lg font-bold">{blog.author.name}</p>
             <div className="flex gap-2 text-gray-500">
               <p>{readingTime(blog.createdAt)} min read</p>
@@ -51,8 +51,9 @@ export const Blog = () => {
           </div>
         </div>
         <h1 className="text-3xl font-bold my-4">{blog && blog.title}</h1>
+        <p className="text-lg text-gray-700">{blog && blog.description}</p>
         <article
-          className="text-left text-xl font-serif markdown text-gray-800 font-extralight mt-4 w-full min-w-0 max-w-full md:max-w-6xl px-1 md:px-6"
+          className="text-left text-xl font-serif markdown text-gray-800 font-extralight mt-4 w-full min-w-0 max-w-full md:max-w-6xl "
           style={{ minHeight: "calc(100vh - 103px)" }}
         >
           <div className="prose max-w-none">
