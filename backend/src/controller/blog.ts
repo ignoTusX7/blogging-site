@@ -102,6 +102,9 @@ export const getBlogsController = async (c: Context) => {
       where: {
         published: true,
       },
+      orderBy: {
+        createdAt: 'desc'
+      },
       select: {
         id: true,
         title: true,
@@ -116,6 +119,7 @@ export const getBlogsController = async (c: Context) => {
           },
         },
       },
+
     });
     if (!allBlogs) {
       c.status(404);

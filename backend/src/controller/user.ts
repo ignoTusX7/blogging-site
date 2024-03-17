@@ -157,6 +157,9 @@ export const getBlogs = async (c: Context) => {
       where: {
         authorId: userId,
       },
+      orderBy: {
+        createdAt: 'desc'
+      },
       select: {
         id: true,
         title: true,
