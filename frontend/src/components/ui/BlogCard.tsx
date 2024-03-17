@@ -4,23 +4,21 @@ import { readingTime } from "../../helper";
 interface IBlogCardProps {
   title: string;
   slug: string;
+  description: string;
   content: string;
   publishedAt: string;
   updatedAt?: string;
   authorName: string;
 }
 
-
-
 export const BlogCard = ({
   title,
   slug,
+  description,
   content,
   publishedAt,
   authorName,
 }: IBlogCardProps) => {
-
-
   return (
     <div className="flex flex-col p-2">
       <div className="flex items-center gap-2">
@@ -33,10 +31,12 @@ export const BlogCard = ({
       </div>
       <div className="ml-[7px]">
         <Link to={`/blog/${slug}`}>
-        <h3 className="text-xl font-bold">{title}</h3>
+          <h3 className="text-xl font-bold">{title}</h3>
         </Link>
         <p className="text-md text-gray-500">
-          {content.length >= 20 ? content.substring(0, 20) : content}
+          {description.length >= 20
+            ? description.substring(0, 20)
+            : description}
         </p>
         <div className="flex gap-2 text-gray-500 text-xs mt-2">
           <p>{publishedAt}</p>

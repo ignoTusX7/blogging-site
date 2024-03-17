@@ -5,6 +5,7 @@ import { Blog } from "./pages/Blog";
 import { Home } from "./pages/Home";
 import { Navbar } from "./components/Navbar";
 import { RecoilRoot } from "recoil";
+import { Write } from "./pages/Write";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/write" element={<Write />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/blog/:slug" element={<Blog />} />

@@ -46,6 +46,7 @@ export const Home = () => {
                     key={blog.id}
                     slug={blog.slug}
                     title={blog.title}
+                    description={blog.description}
                     content={blog.content}
                     authorName={blog.author.name}
                     publishedAt={createDate(blog.createdAt)}
