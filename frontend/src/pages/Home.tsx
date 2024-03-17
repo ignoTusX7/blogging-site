@@ -1,7 +1,87 @@
+import { useEffect, useState } from "react";
+import { BlogCard } from "../components/ui/BlogCard";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
+interface IAuthor {
+  name: string;
+}
+interface IBlog {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  createdAt: string;
+  author: IAuthor;
+}
 
 export const Home = () => {
+  const [blogs, setBlogs] = useState<IBlog[]>([]);
+
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/api/v1/blog`)
+      .then((data) => setBlogs(data.data))
+      .catch((e) => console.log(e));
+  }, []);
+
+  const createDate = (date: string) => {
+    const d = new Date(date);
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    // Format date
+    const formattedDate = `${
+      months[d.getMonth()]
+    } ${d.getDate()}, ${d.getFullYear()}`;
+    return formattedDate;
+  };
+
+ 
   return (
-    <div className="text-3xl mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore eveniet dolorem voluptatum? Ipsa ex voluptatem repellendus, voluptates soluta veniam laboriosam quibusdam animi magnam eius. Dolore consequatur tenetur fugiat libero voluptas? Expedita voluptatibus tenetur assumenda nulla debitis eaque dignissimos distinctio velit animi neque iure voluptate cupiditate sapiente, porro nesciunt. Aut itaque alias quidem vero odit provident eum non unde, id velit quam placeat, sunt eius rem aperiam, sint repudiandae architecto? Rerum mollitia eligendi pariatur nobis laudantium dolorum praesentium aspernatur, incidunt, voluptatem quia unde eaque eos maiores repudiandae hic fuga officiis, cum consectetur velit veritatis? Reprehenderit nam in tempore animi. Sapiente officia eligendi vitae ut! Temporibus quis molestias quaerat cumque distinctio aut reprehenderit vitae, sit quas, similique ducimus voluptates ipsam ab fuga. Sunt ducimus deserunt esse a corrupti rerum at architecto quisquam omnis neque eveniet, dolorem ipsam natus est quidem illum porro corporis? Eveniet eum consectetur suscipit! Alias esse rem illum expedita rerum impedit consequuntur error quia modi mollitia aliquam assumenda molestiae eum, recusandae molestias natus aperiam dolore. Ipsam magni totam est esse a aperiam fugiat fuga id veritatis reprehenderit consequatur eos qui mollitia, voluptate tempora, quaerat, dolore ut alias facere voluptas rerum blanditiis quam. Illo error inventore modi dolores omnis ea, perspiciatis commodi labore officiis ullam quis doloremque molestiae quod in aperiam alias incidunt mollitia doloribus! Fuga architecto, totam incidunt dicta itaque laborum odit accusamus exercitationem ad est blanditiis odio id iusto eaque numquam nemo! Consequuntur explicabo architecto laboriosam, voluptas suscipit blanditiis veritatis fugiat, magnam adipisci error iste distinctio impedit. Repellendus, maiores. Corporis dignissimos quisquam soluta dolorum delectus voluptatem voluptatum aperiam officiis facilis, iusto odit facere deleniti inventore animi. Inventore voluptates dignissimos vero reprehenderit ipsa minus illum, molestiae quam, adipisci unde, nobis excepturi? Animi, magnam? Voluptates, consequatur corporis incidunt nobis eos vel id perspiciatis eius error necessitatibus debitis quaerat veniam consectetur. </div>
-  )
-}
+    <div className="mt-20 w-full mx-auto px-4 sm:px-6 lg:px-16">
+      <div className="hero-section bg-slate-500">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim nulla quam
+        veniam velit minus assumenda natus odio sapiente culpa possimus,
+        excepturi veritatis ut dolorem, consequuntur dignissimos doloribus
+        harum! Aliquid, nesciunt. Id neque, magni laudantium fuga quam quia
+        beatae. Soluta blanditiis quis illo fugiat natus aut ab, harum molestiae
+        vero quos.
+      </div>
+      <div className="mt-10 grid grid-cols-2 gap-[7rem]">
+        <div className="flex flex-col gap-3">
+          {blogs.length == 0 && "Loading ..."}
+          {blogs &&
+            blogs.map((blog) => {
+              return (
+                <BlogCard
+                  key={blog.id}
+                  slug={blog.slug}
+                  title={blog.title}
+                  content={blog.content}
+                  authorName={blog.author.name}
+                  publishedAt={createDate(blog.createdAt)}
+                />
+              );
+            })}
+        </div>
+        <div className="w-3/4">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita
+          reiciendis dolor temporibus nam? Placeat impedit labore fugit dolorum!
+          Illum, vitae.
+        </div>
+      </div>
+    </div>
+  );
+};
