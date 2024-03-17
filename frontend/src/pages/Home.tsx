@@ -15,7 +15,6 @@ export const Home = () => {
       .catch((e) => console.log(e));
   }, []);
 
- 
   return (
     <div className="mt-20 w-full mx-auto px-4 sm:px-6 lg:px-16">
       <div className="hero-section bg-slate-500">

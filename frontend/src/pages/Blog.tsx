@@ -5,7 +5,6 @@ import { BACKEND_URL } from "../config";
 import { getTimeDifference, readingTime } from "../helper";
 import { IBlog } from "../types";
 
-
 // Example usage
 
 export const Blog = () => {

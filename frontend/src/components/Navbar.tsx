@@ -1,14 +1,18 @@
-// src/components/Navbar.js
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/Button";
 import { Link } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { loginAtom } from "../store/user";
 
 const RenderMenu = () => {
-  if (localStorage.getItem("token")) {
+  const [loginState, setLoginState] = useRecoilState(loginAtom);
+  if (loginState) {
     return (
       <Button
         handleClick={() => {
           localStorage.removeItem("token");
+          localStorage.removeItem("email");
+          setLoginState(false);
           window.location.href = "/signin";
         }}
         label="Logout"
@@ -36,17 +40,11 @@ const RenderMenu = () => {
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(
-    localStorage.getItem("token") ? true : false
-  );
+  const loginState = useRecoilValue(loginAtom);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  useEffect(() => {
-    localStorage.getItem("token") ? setLoggedIn(true) : setLoggedIn(false);
-  }, []);
 
   return (
     <nav className="fixed top-0 w-screen bg-white border-b-[1px] border-black">
@@ -78,7 +76,7 @@ export const Navbar = () => {
                   Home
                 </Link>
                 <Link
-                  to={`${loggedIn ? "/write" : "/signin"}`}
+                  to={`${loginState ? "/write" : "/signin"}`}
                   className="text-black hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Write
@@ -146,7 +144,7 @@ export const Navbar = () => {
             Home
           </Link>
           <Link
-            to={`${loggedIn ? "/write" : "/signin"}`}
+            to={`${loginState ? "/write" : "/signin"}`}
             className="text-black hover:text-gray-700 block px-3 py-2 rounded-md text-base font-medium"
           >
             Write

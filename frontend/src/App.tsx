@@ -4,10 +4,11 @@ import { Signin } from "./pages/Signin";
 import { Blog } from "./pages/Blog";
 import { Home } from "./pages/Home";
 import { Navbar } from "./components/Navbar";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (
-    <>
+    <RecoilRoot>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -17,7 +18,7 @@ function App() {
           <Route path="/blog/:slug" element={<Blog />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </RecoilRoot>
   );
 }
 

@@ -8,6 +8,8 @@ import { BACKEND_URL } from "../config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "../components/ui/Button";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { loginAtom, userAtom } from "../store/user";
 interface IFormInput {
   email: string;
   password: string;
@@ -21,9 +23,16 @@ export const Signin = () => {
     watch,
   } = useForm<IFormInput>();
 
+  const [loginState, setLoginState] = useRecoilState(loginAtom);
+  const setUserState = useSetRecoilState(userAtom);
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  if (loginState || localStorage.getItem("token")) {
+    setLoginState(true);
+    navigate("/");
+  }
 
   const password = useRef({});
   password.current = watch("password", "");
@@ -38,8 +47,13 @@ export const Signin = () => {
       setLoading(false);
       if (res.data.success === true) {
         const jwt = res.data.token;
+        setUserState({
+          email: data.email,
+        });
         localStorage.setItem("token", jwt);
-        return (window.location.href = "/");
+        localStorage.setItem("email", data.email);
+        setLoginState(true);
+        return navigate("/");
       }
     } catch (error) {
       setLoading(false);
