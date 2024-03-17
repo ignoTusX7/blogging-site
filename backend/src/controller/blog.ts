@@ -31,6 +31,7 @@ export const postBlogController = async (c: Context) => {
         data: {
           title: body.data.title,
           slug: createSlug(body.data.slug),
+          description: body.data.description,
           content: body.data.content,
           published: body.data.published,
           authorId: userId,
@@ -65,6 +66,7 @@ export const getBlogController = async (c: Context) => {
         id: true,
         title: true,
         slug: true,
+        description: true,
         content: true,
         createdAt: true,
         updatedAt: true,
@@ -103,12 +105,13 @@ export const getBlogsController = async (c: Context) => {
         published: true,
       },
       orderBy: {
-        createdAt: 'desc'
+        createdAt: "desc",
       },
       select: {
         id: true,
         title: true,
         slug: true,
+        description: true,
         content: true,
         createdAt: true,
         updatedAt: true,
@@ -119,7 +122,6 @@ export const getBlogsController = async (c: Context) => {
           },
         },
       },
-
     });
     if (!allBlogs) {
       c.status(404);
@@ -159,6 +161,7 @@ export const updateBlogsController = async (c: Context) => {
       data: {
         title: body.data.title,
         slug: body.data.slug,
+        description: body.data.description,
         content: body.data.content,
         published: body.data.published,
       },

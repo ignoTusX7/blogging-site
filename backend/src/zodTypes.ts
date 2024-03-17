@@ -24,6 +24,7 @@ export const signInBody = z.object({
 export const postBody = z.object({
   title: z.string(),
   slug: z.string(),
+  description: z.string(),
   content: z.string(),
   published: z.boolean(),
 });
@@ -32,6 +33,7 @@ export const updateBody = z.object({
   id: z.string().optional(),
   title: z.string().optional(),
   slug: z.string().optional(),
+  description: z.string().optional(),
   content: z.string().optional(),
   published: z.boolean().optional(),
 });
