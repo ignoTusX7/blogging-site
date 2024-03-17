@@ -53,7 +53,7 @@ export const Home = () => {
                 );
               })}
           </div>
-          <div className="w-3/4 bg-white">
+          <div className="w-full md:w-3/4 bg-white">
             <div className="sticky top-16 right-0">
               <p className="font-bold">Discover more of what matters to you</p>
               <div className="grid grid-cols-3 gap-2 mt-4">

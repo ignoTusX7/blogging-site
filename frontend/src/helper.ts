@@ -38,20 +38,31 @@ export function getTimeDifference(articleDate: string) {
   // Calculate the time difference in milliseconds
   const timeDifference = currentDate - publicationDate;
 
-  // Convert milliseconds to days, months, and years
-  const millisecondsPerDay = 1000 * 60 * 60 * 24;
-  const millisecondsPerMonth = millisecondsPerDay * 30.436875; // Average number of days in a month
+  // Convert milliseconds to seconds, minutes, hours, days, months, and years
+  const millisecondsPerMinute = 1000 * 60;
+  const millisecondsPerHour = millisecondsPerMinute * 60;
+  const millisecondsPerDay = millisecondsPerHour * 24;
+  const millisecondsPerMonth = millisecondsPerDay * (365.25 / 12); // Average number of days in a month
   const millisecondsPerYear = millisecondsPerDay * 365.25; // Average number of days in a year
 
+  const secondsAgo = Math.floor(timeDifference / 1000);
+  const minutesAgo = Math.floor(timeDifference / millisecondsPerMinute);
+  const hoursAgo = Math.floor(timeDifference / millisecondsPerHour);
   const daysAgo = Math.floor(timeDifference / millisecondsPerDay);
   const monthsAgo = Math.floor(timeDifference / millisecondsPerMonth);
   const yearsAgo = Math.floor(timeDifference / millisecondsPerYear);
 
-  if (daysAgo > 365) {
+  if (yearsAgo > 0) {
     return `${yearsAgo} year${yearsAgo > 1 ? "s" : ""} ago`;
-  } else if (daysAgo > 30) {
+  } else if (monthsAgo > 0) {
     return `${monthsAgo} month${monthsAgo > 1 ? "s" : ""} ago`;
-  } else {
+  } else if (daysAgo > 0) {
     return `${daysAgo} day${daysAgo > 1 ? "s" : ""} ago`;
+  } else if (hoursAgo > 0) {
+    return `${hoursAgo} hour${hoursAgo > 1 ? "s" : ""} ago`;
+  } else if (minutesAgo > 0) {
+    return `${minutesAgo} minute${minutesAgo > 1 ? "s" : ""} ago`;
+  } else {
+    return `${secondsAgo} second${secondsAgo > 1 ? "s" : ""} ago`;
   }
 }
