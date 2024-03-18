@@ -34,8 +34,8 @@ export const BlogCard = ({
           <h3 className="text-xl font-bold">{title}</h3>
         </Link>
         <p className="text-md text-gray-500">
-          {description.length >= 20
-            ? description.substring(0, 20)
+          {description.length >= 105
+            ? description.substring(0, 105) + "..."
             : description}
         </p>
         <div className="flex gap-2 text-gray-500 text-xs mt-2">
