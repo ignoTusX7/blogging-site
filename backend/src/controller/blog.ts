@@ -7,7 +7,7 @@ import { createSlug } from "../../helper";
 export const postBlogController = async (c: Context) => {
   const userId = c.get("userId");
   const body = postBody.safeParse(await c.req.json());
-
+  
   if (body.success) {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
@@ -47,7 +47,7 @@ export const postBlogController = async (c: Context) => {
       await prisma.$disconnect();
     }
   }
-  c.status(401);
+  c.status(411);
   return c.json({ message: "Invalid Body" });
 };
 

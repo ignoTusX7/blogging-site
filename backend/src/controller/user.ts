@@ -119,6 +119,7 @@ export const getBlog = async (c: Context) => {
         content: true,
         createdAt: true,
         updatedAt: true,
+        published : true,
         author: {
           select: {
             id: true,
@@ -159,7 +160,7 @@ export const getBlogs = async (c: Context) => {
         authorId: userId,
       },
       orderBy: {
-        createdAt: 'desc'
+        createdAt: "desc",
       },
       select: {
         id: true,
@@ -169,6 +170,7 @@ export const getBlogs = async (c: Context) => {
         content: true,
         createdAt: true,
         updatedAt: true,
+        published : true,
         author: {
           select: {
             id: true,
