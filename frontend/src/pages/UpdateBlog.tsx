@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import { loginAtom } from "../store/user";
 import { ToastContainer, toast } from "react-toastify";
 import MDEditor from "@uiw/react-md-editor";
+import { MdDeleteOutline } from "react-icons/md";
 
 interface IFormInput {
   title: string;
@@ -88,9 +89,32 @@ export const UpdateBlog = () => {
     setLoading(false);
   };
 
+  const deleteBlog = async () => {
+    const ans = confirm("Are you sure to delete Blog?");
+    if (!ans) {
+      return;
+    }
+    try {
+      axios.delete(`${BACKEND_URL}/api/v1/blog/${blog.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      toast.success("Blog deleted");
+      return navigate("/profile");
+    } catch (error) {
+      toast.error("Failed to delete Blog");
+    }
+  };
+
   return (
     <div className="mt-20">
-      <h1 className="text-center font-bold text-3xl">Update Blog</h1>
+      <div className="max-w-3xl mx-auto flex items-center justify-between">
+        <h1 className="text-center font-bold text-3xl">Update Blog</h1>
+        <div className="cursor-pointer" >
+          <MdDeleteOutline onClick={deleteBlog} size={24} />
+        </div>
+      </div>
       <div className="px-16">
         <ToastContainer />
         <form
