@@ -40,6 +40,7 @@ export const Write = () => {
     if (!loginState) {
       return navigate("/signin");
     }
+    document.title = 'Write a Blog'
   }, []);
 
   const onSubmit = async (data: IFormInput) => {

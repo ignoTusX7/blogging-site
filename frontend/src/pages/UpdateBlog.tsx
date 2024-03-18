@@ -26,6 +26,7 @@ export const UpdateBlog = () => {
     if (!loginState) {
       return navigate("/signin");
     }
+  document.title = 'Update Blog';
   }, []);
   const { slug } = useParams();
 

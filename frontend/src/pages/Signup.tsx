@@ -22,6 +22,7 @@ export const Signup = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+  document.title = 'Signup';
     if (loginState || localStorage.getItem("token")) {
       setLoginState(true);
       return navigate("/");

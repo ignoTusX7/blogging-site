@@ -17,7 +17,7 @@ interface IFormInput {
 
 export const Signin = () => {
   const navigate = useNavigate();
-
+  document.title = 'Signin';
   const [loginState, setLoginState] = useRecoilState(loginAtom);
   useEffect(() => {
     if (loginState || localStorage.getItem("token")) {

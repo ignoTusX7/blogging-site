@@ -11,10 +11,11 @@ export const Profile = () => {
 
   
   useEffect(()=>{
+    document.title = `Profile - ${localStorage.getItem('name')}`
     if (!loginState) {
       return navigate("/signin");
     }
-  },[loginState])
+  },[])
 
   return (
     <div className="">

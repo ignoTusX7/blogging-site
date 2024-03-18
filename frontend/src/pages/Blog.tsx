@@ -28,9 +28,13 @@ export const Blog = () => {
   useEffect(() => {
     axios
       .get(`${BACKEND_URL}/api/v1/blog/${slug}`)
-      .then((d) => setBlog(d.data))
+      .then((d) => {setBlog(d.data) 
+        document.title = `Blog - ${d.data.title}`
+      } )
       .catch((e) => console.log(e));
+      
   }, [slug]);
+  
 
   return (
     <div className="mt-10 md:mt-20 mx-auto px-4 sm:px-6 lg:px-16">

@@ -10,6 +10,7 @@ export const Home = () => {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
 
   useEffect(() => {
+    document.title = "Blogging Site"
     axios
       .get(`${BACKEND_URL}/api/v1/blog`)
       .then((data) => setBlogs(data.data))
