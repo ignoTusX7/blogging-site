@@ -50,10 +50,11 @@ export const Signin = () => {
       if (res.data.success === true) {
         const jwt = res.data.token;
         setUserState({
-          email: data.email,
+          name: res.data.name,
         });
         localStorage.setItem("token", jwt);
-        localStorage.setItem("email", data.email);
+
+        localStorage.setItem("name", res.data.name);
         setLoginState(true);
         return navigate("/");
       }

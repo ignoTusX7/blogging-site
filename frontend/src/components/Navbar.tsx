@@ -11,7 +11,7 @@ const RenderMenu = () => {
       <Button
         handleClick={() => {
           localStorage.removeItem("token");
-          localStorage.removeItem("email");
+          localStorage.removeItem("name");
           setLoginState(false);
           window.location.href = "/signin";
         }}

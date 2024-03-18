@@ -8,6 +8,6 @@ export const loginAtom = atom({
 export const userAtom = atom({
   key: "userAtom",
   default: {
-    email: "",
+    name: "",
   },
 });

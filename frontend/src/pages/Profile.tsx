@@ -1,12 +1,13 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { UserBlog } from "../components/UserBlog";
 import { loginAtom } from "../store/user";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Button } from "../components/ui/Button";
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const loginState = useRecoilValue(loginAtom);
+  const [loginState, setLoginState] = useRecoilState(loginAtom);
 
   
   useEffect(()=>{
@@ -19,7 +20,7 @@ export const Profile = () => {
     <div className="">
       <div className="pt-20 px-8 grid grid-col-1 md:grid-cols-3 mx-auto">
         <div className="md:col-span-2 border-r-[1px] border-gray-200 h-screen overflow-x-auto">
-          <h4 className="text-4xl font-semibold">Athome</h4>
+          <h4 className="text-4xl font-semibold">{localStorage.getItem('name')}</h4>
           <div className="mt-4">
             <h5 className="font-semibold text-lg">Your Posts: </h5>
             <UserBlog />
@@ -43,7 +44,15 @@ export const Profile = () => {
             </div>
           </div>
           <div className="mt-2">
-            <p className="text-2xl"> Athome</p>
+            <p className="text-xl"> {localStorage.getItem('name')}</p>
+          </div>
+          <div className="mt-3 flex w-1/3">
+            <Button label="Logout" handleClick={()=>{
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("name");
+                        setLoginState(false);
+                        window.location.href = "/signin";
+            }}/>
           </div>
         </div>
       </div>
