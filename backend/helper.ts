@@ -27,7 +27,7 @@ class PasswordEncryptor {
 // Example usage:
 export const encryptor = new PasswordEncryptor();
 
-export function createSlug(input: string) {
+export function createSlug(input: string | undefined):string {
   // Convert the string to lowercase
   let slug = input.toLowerCase();
 

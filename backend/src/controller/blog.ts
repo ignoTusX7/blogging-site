@@ -7,7 +7,7 @@ import { createSlug } from "../../helper";
 export const postBlogController = async (c: Context) => {
   const userId = c.get("userId");
   const body = postBody.safeParse(await c.req.json());
-  
+
   if (body.success) {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
@@ -160,7 +160,7 @@ export const updateBlogsController = async (c: Context) => {
       },
       data: {
         title: body.data.title,
-        slug: body.data.slug,
+        slug: createSlug(body.data.slug),
         description: body.data.description,
         content: body.data.content,
         published: body.data.published,
