@@ -1,7 +1,19 @@
+import { useRecoilValue } from "recoil";
 import { UserBlog } from "../components/UserBlog";
+import { loginAtom } from "../store/user";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Profile = () => {
+  const navigate = useNavigate();
+  const loginState = useRecoilValue(loginAtom);
 
+  
+  useEffect(()=>{
+    if (!loginState) {
+      return navigate("/signin");
+    }
+  },[loginState])
 
   return (
     <div className="">
@@ -10,7 +22,7 @@ export const Profile = () => {
           <h4 className="text-4xl font-semibold">Athome</h4>
           <div className="mt-4">
             <h5 className="font-semibold text-lg">Your Posts: </h5>
-           <UserBlog/>
+            <UserBlog />
           </div>
         </div>
         <div className=" pl-10">

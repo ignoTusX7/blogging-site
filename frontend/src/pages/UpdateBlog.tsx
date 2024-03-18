@@ -20,10 +20,12 @@ interface IFormInput {
 export const UpdateBlog = () => {
   const loginState = useRecoilValue(loginAtom);
   const navigate = useNavigate();
-  if (!loginState) {
-    navigate("/signin");
-  }
 
+  useEffect(() => {
+    if (!loginState) {
+      return navigate("/signin");
+    }
+  }, []);
   const { slug } = useParams();
 
   const [loading, setLoading] = useState(false);

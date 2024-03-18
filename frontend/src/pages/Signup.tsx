@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SignupSideBox } from "../components/signupSideBox";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -8,6 +8,8 @@ import { BACKEND_URL } from "../config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "../components/ui/Button";
+import { useRecoilState } from "recoil";
+import { loginAtom } from "../store/user";
 interface IFormInput {
   name: string;
   email: string;
@@ -16,6 +18,15 @@ interface IFormInput {
 }
 
 export const Signup = () => {
+  const [loginState, setLoginState] = useRecoilState(loginAtom);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loginState || localStorage.getItem("token")) {
+      setLoginState(true);
+      return navigate("/");
+    }
+  }, []);
   const {
     register,
     formState: { errors },
@@ -26,7 +37,6 @@ export const Signup = () => {
   const [showPass, setShowPass] = useState(false);
   const [showCPass, setShowCPass] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const password = useRef({});
   password.current = watch("password", "");

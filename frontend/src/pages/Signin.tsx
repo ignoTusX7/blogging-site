@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SignupSideBox } from "../components/signupSideBox";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -16,6 +16,15 @@ interface IFormInput {
 }
 
 export const Signin = () => {
+  const navigate = useNavigate();
+
+  const [loginState, setLoginState] = useRecoilState(loginAtom);
+  useEffect(() => {
+    if (loginState || localStorage.getItem("token")) {
+      setLoginState(true);
+      return navigate("/");
+    }
+  }, []);
   const {
     register,
     formState: { errors },
@@ -23,16 +32,9 @@ export const Signin = () => {
     watch,
   } = useForm<IFormInput>();
 
-  const [loginState, setLoginState] = useRecoilState(loginAtom);
   const setUserState = useSetRecoilState(userAtom);
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  if (loginState || localStorage.getItem("token")) {
-    setLoginState(true);
-    navigate("/");
-  }
 
   const password = useRef({});
   password.current = watch("password", "");

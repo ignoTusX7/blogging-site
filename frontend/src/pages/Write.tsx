@@ -8,7 +8,7 @@ import MDEditor from "@uiw/react-md-editor";
 import "@uiw/react-md-editor/markdown-editor.css";
 // No import is required in the WebPack.
 import "@uiw/react-markdown-preview/markdown.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { ToastContainer, toast } from "react-toastify";
@@ -24,6 +24,9 @@ interface IFormInput {
 export const Write = () => {
   const mkdStr = `**Write blog content here!!!**`;
   const navigate = useNavigate();
+
+  const loginState = useRecoilValue(loginAtom);
+
   const [value, setValue] = useState(mkdStr);
   const [loading, setLoading] = useState(false);
   const {
@@ -33,11 +36,11 @@ export const Write = () => {
     formState: { errors },
   } = useForm<IFormInput>();
 
-  const loginState = useRecoilValue(loginAtom);
-
-  if (!loginState) {
-    navigate("/signin");
-  }
+  useEffect(() => {
+    if (!loginState) {
+      return navigate("/signin");
+    }
+  }, []);
 
   const onSubmit = async (data: IFormInput) => {
     setLoading(true);
@@ -74,6 +77,7 @@ export const Write = () => {
     }
     setLoading(false);
   };
+
   return (
     <div className="mt-20 px-16">
       <ToastContainer />
